@@ -472,13 +472,13 @@
         <!-- Updated Header Section with Category Dropdown -->
         <header class="header">
             <div class="logo-container">
-                <img src="https://i.ibb.co/4wN1kkbV/blue-box-logo.png" alt="EVOSYNE Logo" class="logo">
+                <img src="https://i.ibb.co/cSHjcf3K/blue-box-logo.jpg" alt="EVOSYNE Logo" class="logo">
             </div>
             
             <div class="search-container">
                 <select class="category-select">
                     <option value="">SELECT CATEGORY</option>
-                    <option value="rented">Laptops for Rent</option>
+                    <option value="rented">Rental Services</option>
                     <option value="parts">Laptop Spare Parts</option>
                     <option value="refurbished">Refurbished Laptops</option>
                     <option value="printers">Printers</option>
@@ -513,14 +513,12 @@
         <!-- Updated Category Navigation with Subcategories -->
         <nav class="category-nav">
             <ul class="category-links">
-                <!-- Laptops for Rent with Subcategories -->
+                <!-- Rental Services with Subcategories -->
                 <li>
-                    <a href="#rented">Laptops for Rent</a>
+                    <a href="#rented">Rental Services</a>
                     <ul class="subcategory">
-                        <li><a href="#business">Business Laptops</a></li>
-                        <li><a href="#gaming">Gaming Laptops</a></li>
-                        <li><a href="#student">Student Laptops</a></li>
-                        <li><a href="#premium">Premium Laptops</a></li>
+                        <li><a href="#business">Laptop on Rent</a></li>
+                        <li><a href="#gaming">Printer on Rent</a></li>
                     </ul>
                 </li>
                 
@@ -617,8 +615,268 @@
         <section class="hero">
             <div class="hero-content">
                 <h1>Evolve with Evosyne: Powering Your Digital Universe</h1>
-                <a href="#solutions" class="cta-button">Explore Solutions</a>
-            </div>
+                <a href="enquiry.html" class="cta-button">Explore Services</a>
+                   </div><!DOCTYPE html>
+                   <html lang="en">
+                   <head>
+                       <!-- Your existing head content remains the same -->
+                       <style>
+                           /* Add these new styles to your existing CSS */
+                           
+                           /* Modal Styles */
+                           .modal-overlay {
+                               position: fixed;
+                               top: 0;
+                               left: 0;
+                               right: 0;
+                               bottom: 0;
+                               background: rgba(0,0,0,0.7);
+                               z-index: 2000;
+                               display: none;
+                               align-items: center;
+                               justify-content: center;
+                           }
+                           
+                           .modal-content {
+                               background: white;
+                               padding: 2rem;
+                               border-radius: 10px;
+                               max-width: 600px;
+                               width: 90%;
+                               max-height: 90vh;
+                               overflow-y: auto;
+                               position: relative;
+                               animation: modalFadeIn 0.3s ease-out;
+                           }
+                           
+                           @keyframes modalFadeIn {
+                               from { opacity: 0; transform: translateY(-20px); }
+                               to { opacity: 1; transform: translateY(0); }
+                           }
+                           
+                           .modal-close {
+                               position: absolute;
+                               top: 15px;
+                               right: 15px;
+                               font-size: 1.5rem;
+                               background: none;
+                               border: none;
+                               cursor: pointer;
+                               color: #2A2D72;
+                           }
+                           
+                           /* Enquiry Form Styles */
+                           .enquiry-form h2 {
+                               color: #2A2D72;
+                               margin-bottom: 1.5rem;
+                               text-align: center;
+                           }
+                           
+                           .form-group {
+                               margin-bottom: 1.5rem;
+                           }
+                           
+                           .form-group label {
+                               display: block;
+                               margin-bottom: 0.5rem;
+                               color: #2A2D72;
+                               font-weight: 500;
+                           }
+                           
+                           .form-control {
+                               width: 100%;
+                               padding: 12px 15px;
+                               border: 1px solid #E9ECEF;
+                               border-radius: 5px;
+                               font-size: 1rem;
+                               transition: border-color 0.3s;
+                           }
+                           
+                           .form-control:focus {
+                               border-color: #00C1D4;
+                               outline: none;
+                               box-shadow: 0 0 0 3px rgba(0, 193, 212, 0.2);
+                           }
+                           
+                           select.form-control {
+                               appearance: none;
+                               background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+                               background-repeat: no-repeat;
+                               background-position: right 10px center;
+                               background-size: 1em;
+                           }
+                           
+                           textarea.form-control {
+                               min-height: 120px;
+                               resize: vertical;
+                           }
+                           
+                           .privacy-terms {
+                               font-size: 0.9rem;
+                               margin: 1.5rem 0;
+                               display: flex;
+                               align-items: center;
+                           }
+                           
+                           .privacy-terms input {
+                               margin-right: 10px;
+                           }
+                           
+                           .privacy-terms a {
+                               color: #00C1D4;
+                               text-decoration: none;
+                               margin: 0 5px;
+                           }
+                           
+                           .privacy-terms a:hover {
+                               text-decoration: underline;
+                           }
+                           
+                           .submit-btn {
+                               background: #FF6B35;
+                               color: white;
+                               border: none;
+                               padding: 12px 30px;
+                               border-radius: 5px;
+                               font-size: 1rem;
+                               font-weight: 500;
+                               cursor: pointer;
+                               transition: background 0.3s;
+                               width: 100%;
+                           }
+                           
+                           .submit-btn:hover {
+                               background: #E05A2B;
+                           }
+                           
+                           /* Responsive Adjustments */
+                           @media (max-width: 768px) {
+                               .modal-content {
+                                   padding: 1.5rem;
+                               }
+                               
+                               .privacy-terms {
+                                   flex-direction: column;
+                                   align-items: flex-start;
+                               }
+                           }
+                       </style>
+                   </head>
+                   <body>
+                       <!-- Your existing body content remains the same until the footer -->
+                       
+                       <!-- Add this modal HTML before the closing </body> tag -->
+                       <div class="modal-overlay" id="enquiryModal">
+                           <div class="modal-content">
+                               <button class="modal-close">&times;</button>
+                               <form class="enquiry-form" id="contactForm">
+                                   <h2>Get in Touch</h2>
+                                   
+                                   <div class="form-group">
+                                       <label for="name">Enter your name</label>
+                                       <input type="text" id="name" name="name" class="form-control" required>
+                                   </div>
+                                   
+                                   <div class="form-group">
+                                       <label for="email">Enter Email ID</label>
+                                       <input type="email" id="email" name="email" class="form-control" required>
+                                   </div>
+                                   
+                                   <div class="form-group">
+                                       <label for="mobile">Enter mobile</label>
+                                       <input type="tel" id="mobile" name="mobile" class="form-control" required>
+                                   </div>
+                                   
+                                   <div class="form-group">
+                                       <label for="service">Select Services</label>
+                                       <select id="service" name="service" class="form-control" required>
+                                           <option value="">-- Select a Service --</option>
+                                           <option value="laptops">Rental Services</option>
+                                           <option value="parts">Laptop Spare Parts</option>
+                                           <option value="refurbished">Refurbished Laptops</option>
+                                           <option value="printers">Printers</option>
+                                           <option value="desktops">Computers & Desktop</option>
+                                           <option value="accessories">Accessories</option>
+                                           <option value="other">Other</option>
+                                       </select>
+                                   </div>
+                                   
+                                   <div class="form-group">
+                                       <label for="location">Select Location</label>
+                                       <select id="location" name="location" class="form-control" required>
+                                           <option value="">-- Select Location --</option>
+                                           <option value="mumbai">Mumbai</option>
+                                           <option value="delhi">Delhi</option>
+                                           <option value="bangalore">Bangalore</option>
+                                           <option value="hyderabad">Hyderabad</option>
+                                           <option value="chennai">Chennai</option>
+                                           <option value="pune">Pune</option>
+                                           <option value="other">Other</option>
+                                       </select>
+                                   </div>
+                                   
+                                   <div class="form-group">
+                                       <label for="message">Message</label>
+                                       <textarea id="message" name="message" class="form-control"></textarea>
+                                   </div>
+                                   
+                                   <div class="privacy-terms">
+                                       <input type="checkbox" id="privacy" name="privacy" required>
+                                       <label for="privacy">I agree to the <a href="#privacy">Privacy Policy</a> and <a href="#terms">Terms of Service</a></label>
+                                   </div>
+                                   
+                                   <button type="submit" class="submit-btn">SUBMIT</button>
+                               </form>
+                           </div>
+                       </div>
+                   
+                       <!-- Add this script right before the closing </body> tag -->
+                       <script>
+                           // Open modal when "Explore Solutions" is clicked
+                           document.querySelector('.cta-button').addEventListener('click', function(e) {
+                               e.preventDefault();
+                               document.getElementById('enquiryModal').style.display = 'flex';
+                               document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+                           });
+                           
+                           // Close modal
+                           document.querySelector('.modal-close').addEventListener('click', function() {
+                               document.getElementById('enquiryModal').style.display = 'none';
+                               document.body.style.overflow = 'auto'; // Re-enable scrolling
+                           });
+                           
+                           // Close when clicking outside
+                           document.getElementById('enquiryModal').addEventListener('click', function(e) {
+                               if(e.target === this) {
+                                   this.style.display = 'none';
+                                   document.body.style.overflow = 'auto'; // Re-enable scrolling
+                               }
+                           });
+                           
+                           // Form submission handling
+                           document.getElementById('contactForm').addEventListener('submit', function(e) {
+                               e.preventDefault();
+                               
+                               // Validate privacy checkbox
+                               if(!document.getElementById('privacy').checked) {
+                                   alert('Please agree to the Privacy Policy and Terms of Service');
+                                   return false;
+                               }
+                               
+                               // Here you would normally send the form data to your server
+                               // For demonstration, we'll just show an alert
+
+                               
+                               alert('Thank you for your enquiry! We will contact you soon.');
+                               
+                               // Reset form and close modal
+                               this.reset();
+                               document.getElementById('enquiryModal').style.display = 'none';
+                               document.body.style.overflow = 'auto';
+                           });
+                       </script>
+                   </body>
+                   </html>
             <div class="hero-image">
                 <img src="https://i.ibb.co/0RnBGQCw/image2.png" alt="Technology Illustration">
             </div>
@@ -685,8 +943,8 @@
         <footer class="main-footer">
             <div class="container footer-grid">
                 <div class="footer-brand">
-                    <img src="https://i.ibb.co/4wN1kkbV/blue-box-logo.png" alt="Evosyne Logo" class="footer-logo">
-                    <p class="contact-email">zeetechnology@evosyne.com</p>
+                    <img src="https://i.ibb.co/cSHjcf3K/blue-box-logo.jpg" alt="Evosyne Logo" class="footer-logo">
+                    <p class="contact-email">info@evosyne.com</p>
                     <p class="footer-address">
                         Office No. F-7, Mahalaxmi Bldg,<br>
                         P.B. Marg, Worli, Opp. Paragon Center, Mumbai 400030<br>
@@ -1206,3 +1464,4 @@
         <!-- ... (rest of the HTML body remains unchanged) ... -->
     </body>
     </html>
+    
