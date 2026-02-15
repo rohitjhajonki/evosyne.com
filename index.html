@@ -1,1467 +1,458 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>EVOSYNE - Technology Marketplace</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-        <style>
-            /* Reset and Base Styles */
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                font-family: 'Poppins', sans-serif;
-            }
-
-            /* Updated Header Styles */
-            .header {
-                padding: 1rem 5%;
-                background: #ffffff;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                display: flex;
-                align-items: center;
-                gap: 2rem;
-            }
-
-            .logo-container {
-                flex: 0 0 180px;
-            }
-
-            .logo {
-                width: 100%;
-            }
-
-            .search-container {
-                flex: 1;
-                max-width: 600px;
-                display: flex;
-                align-items: stretch;
-            }
-
-            .category-select {
-                padding: 0 15px;
-                border: 1px solid #ddd;
-                border-right: none;
-                border-radius: 4px 0 0 4px;
-                background: #f8fafc;
-                color: #333;
-                font-size: 0.9rem;
-                cursor: pointer;
-                appearance: none;
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-                background-repeat: no-repeat;
-                background-position: right 10px center;
-                background-size: 1em;
-            }
-
-            .search-input {
-                width: 100%;
-                padding: 0.8rem;
-                border: 1px solid #ddd;
-                border-left: none;
-                border-right: none;
-                border-radius: 0;
-                font-size: 0.9rem;
-            }
-
-            .search-button {
-                background: #2563eb;
-                color: white;
-                border: none;
-                padding: 0 1.5rem;
-                border-radius: 0 4px 4px 0;
-                cursor: pointer;
-                transition: background 0.3s ease;
-            }
-
-            .search-button:hover {
-                background: #1d4ed8;
-            }
-
-            .header-icons {
-                display: flex;
-                gap: 1.5rem;
-                align-items: center;
-            }
-
-            .header-icon {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                text-decoration: none;
-                color: #333;
-                font-size: 0.9rem;
-            }
-
-            .header-icon i {
-                font-size: 1.2rem;
-                margin-bottom: 0.3rem;
-            }
-
-            /* Updated Category Navigation Styles */
-            .category-nav {
-                background-color: #04030f75;
-                padding: 15px;
-                border-radius: 8px;
-                box-shadow: 0 2px 5px rgba(65, 4, 44, 0.1);
-                margin: 20px 0;
-            }
-            
-            .category-links {
-                list-style-type: none;
-                padding: 0;
-                margin: 0;
-                display: flex;
-                flex-wrap: wrap;
-                gap: 15px;
-                justify-content: center;
-            }
-            
-            .category-links > li {
-                margin: 0;
-                position: relative;
-            }
-            
-            .category-links > li > a {
-                display: inline-block;
-                padding: 10px 15px;
-                background-color: #e0e0e07e;
-                color: #ffffff;
-                text-decoration: none;
-                border-radius: 5px;
-                font-weight: 700;
-                transition: all 0.3s ease;
-                text-align: center;
-                min-width: 150px;
-            }
-            
-            .category-links > li > a:hover {
-                background-color: #b67bf109;
-                transform: translateY(-2px);
-            }
-
-            /* Subcategory Styles */
-            .subcategory {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 200px;
-                background: #f8fafc;
-                border-radius: 0 0 8px 8px;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                z-index: 100;
-                padding: 10px 0;
-            }
-
-            .subcategory li {
-                padding: 5px 15px;
-            }
-
-            .subcategory a {
-                color: #023a17;
-                text-decoration: none;
-                font-weight: 500;
-                display: block;
-                padding: 5px 0;
-                transition: color 0.3s;
-            }
-
-            .subcategory a:hover {
-                color: #2563eb;
-            }
-
-            /* Nested Subcategory Styles */
-            .nested-subcategory {
-                display: none;
-                position: absolute;
-                left: 100%;
-                top: 0;
-                width: 200px;
-                background: #fff;
-                border-radius: 0 8px 8px 8px;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                padding: 10px 0;
-            }
-
-            .has-nested:hover .nested-subcategory {
-                display: block;
-            }
-
-            .category-links > li:hover > .subcategory {
-                display: block;
-            }
-
-            /* Existing Hero Section Styles */
-            .hero {
-                padding: 4rem 5%;
-                background: #f8fafc;
-                display: flex;
-                align-items: center;
-                gap: 3rem;
-            }
-
-            .hero-content {
-                flex: 1;
-            }
-
-            .hero-image {
-                flex: 1;
-                text-align: center;
-            }
-
-            .hero-image img {
-                max-width: 500px;
-                width: 100%;
-            }
-
-            .hero h1 {
-                font-size: 2.8rem;
-                color: #1e293b;
-                margin-bottom: 1.5rem;
-            }
-
-            .hero p {
-                color: #64748b;
-                line-height: 1.6;
-                margin-bottom: 2rem;
-            }
-
-            .cta-button {
-                background: #2563eb;
-                color: white;
-                padding: 1rem 2rem;
-                border-radius: 5px;
-                text-decoration: none;
-                display: inline-block;
-                transition: background 0.3s ease;
-            }
-
-            .cta-button:hover {
-                background: #1d4ed8;
-            }
-
-            /* Responsive Design */
-            @media (max-width: 768px) {
-                .header {
-                    flex-wrap: wrap;
-                    gap: 1rem;
-                }
-                .search-container {
-                    order: 3;
-                    width: 100%;
-                }
-                .category-select {
-                    padding: 0 10px;
-                    font-size: 0.8rem;
-                    max-width: 120px;
-                }
-                .category-links {
-                    flex-direction: column;
-                    align-items: center;
-                }
-                .category-links > li {
-                    width: 100%;
-                }
-                .category-links > li > a {
-                    width: 100%;
-                }
-                .subcategory, .nested-subcategory {
-                    position: static;
-                    width: 100%;
-                    box-shadow: none;
-                }
-                .hero {
-                    flex-direction: column;
-                    text-align: center;
-                }
-                .hero h1 {
-                    font-size: 2rem;
-                }
-            }
-
-            /* Partners Section Styles */
-            .partners-section {
-                padding: 4rem 5%;
-                background: #fff;
-                text-align: center;
-            }
-
-            .partners-section h2 {
-                font-size: 2rem;
-                color: #1e293b;
-                margin-bottom: 2rem;
-            }
-
-            .partners-grid {
-                display: flex;
-                justify-content: center;
-                gap: 4rem;
-                flex-wrap: wrap;
-            }
-
-            .partners-grid img {
-                max-width: 180px;
-                height: auto;
-                filter: grayscale(100%);
-                transition: filter 0.3s ease;
-            }
-
-            .partners-grid img:hover {
-                filter: grayscale(0);
-            }
-
-            /* Features Section Styles */
-            .features-section {
-                padding: 4rem 5%;
-                background: #f8fafc;
-            }
-
-            .features-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 2rem;
-            }
-
-            .feature-card {
-                background: #fff;
-                padding: 2rem;
-                border-radius: 10px;
-                text-align: center;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                transition: transform 0.3s ease;
-            }
-
-            .feature-card:hover {
-                transform: translateY(-5px);
-            }
-
-            .feature-card i {
-                font-size: 2.5rem;
-                color: #2563eb;
-                margin-bottom: 1.5rem;
-            }
-
-            .feature-card h3 {
-                color: #1e293b;
-                margin-bottom: 1rem;
-            }
-
-            .feature-card p {
-                color: #64748b;
-                line-height: 1.6;
-                margin-bottom: 1.5rem;
-            }
-
-            .feature-highlight {
-                background: #dbeafe;
-                color: #2563eb;
-                padding: 0.5rem 1rem;
-                border-radius: 20px;
-                display: inline-block;
-                font-weight: 500;
-            }
-
-            /* Newsletter Styles */
-            .newsletter-section {
-                padding: 4rem 5%;
-                background: #082158;
-                color: white;
-                text-align: center;
-            }
-
-            .newsletter-content h2 {
-                font-size: 2rem;
-                margin-bottom: 1rem;
-            }
-
-            .newsletter-content p {
-                margin-bottom: 2rem;
-                opacity: 0.9;
-            }
-
-            .newsletter-form {
-                max-width: 600px;
-                margin: 0 auto;
-                display: flex;
-                gap: 1rem;
-            }
-
-            .newsletter-form input {
-                flex: 1;
-                padding: 1rem;
-                border: none;
-                border-radius: 5px;
-                font-size: 1rem;
-            }
-
-            .newsletter-form button {
-                background: #030714;
-                color: white;
-                padding: 1rem 2rem;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background 0.3s ease;
-            }
-
-            .newsletter-form button:hover {
-                background: #1e3a8a;
-            }
-
-            /* Footer Styles */
-            .main-footer {
-                background: #1e293b;
-                color: white;
-                padding: 4rem 5% 2rem;
-            }
-
-            .footer-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 3rem;
-                margin-bottom: 3rem;
-            }
-
-            .footer-logo {
-                width: 180px;
-                margin-bottom: 1.5rem;
-            }
-
-            .contact-email {
-                color: #93c5fd;
-                margin-bottom: 2rem;
-            }
-
-            .footer-column h4 {
-                color: #93c5fd;
-                margin-bottom: 1.5rem;
-                font-weight: 600;
-            }
-
-            .footer-column ul {
-                list-style: none;
-            }
-
-            .footer-column li {
-                margin-bottom: 0.8rem;
-            }
-
-            .footer-column a {
-                color: #e5e7eb;
-                text-decoration: none;
-                transition: color 0.3s ease;
-            }
-
-            .footer-column a:hover {
-                color: #2563eb;
-            }
-
-            .footer-bottom {
-                text-align: center;
-                padding-top: 2rem;
-                border-top: 1px solid #374151;
-                margin-top: 2rem;
-                color: #9ca3af;
-            }
-        </style>
-    </head>
-    <body>
-        <!-- Updated Header Section with Category Dropdown -->
-        <header class="header">
-            <div class="logo-container">
-                <img src="https://i.ibb.co/cSHjcf3K/blue-box-logo.jpg" alt="EVOSYNE Logo" class="logo">
-            </div>
-            
-            <div class="search-container">
-                <select class="category-select">
-                    <option value="">SELECT CATEGORY</option>
-                    <option value="rented">Rental Services</option>
-                    <option value="parts">Laptop Spare Parts</option>
-                    <option value="refurbished">Refurbished Laptops</option>
-                    <option value="printers">Printers</option>
-                    <option value="desktop">Computers & Desktop</option>
-                    <option value="accessories">Accessories</option>
-                    <option value="more">More</option>
-                </select>
-                <input type="text" class="search-input" placeholder="Search for products...">
-                <button class="search-button"><i class="fas fa-search"></i></button>
-            </div>
-
-            <div class="header-icons">
-                <a href="#account" class="header-icon">
-                    <i class="far fa-user"></i>
-                    Account
-                </a>
-                <a href="#wishlist" class="header-icon">
-                    <i class="far fa-heart"></i>
-                    Wishlist
-                </a>
-                <a href="#compare" class="header-icon">
-                    <i class="fas fa-exchange-alt"></i>
-                    Compare
-                </a>
-                <a href="#cart" class="header-icon">
-                    <i class="fas fa-shopping-cart"></i>
-                    My Cart
-                </a>
-            </div>
-        </header>
-
-        <!-- Updated Category Navigation with Subcategories -->
-        <nav class="category-nav">
-            <ul class="category-links">
-                <!-- Rental Services with Subcategories -->
-                <li>
-                    <a href="#rented">Rental Services</a>
-                    <ul class="subcategory">
-                        <li><a href="#business">Laptop on Rent</a></li>
-                        <li><a href="#gaming">Printer on Rent</a></li>
-                    </ul>
-                </li>
-                
-                <!-- Laptop Spare Parts with Subcategories -->
-                <li>
-                    <a href="#parts">Laptop Spare Parts</a>
-                    <ul class="subcategory">
-                        <li><a href="#adapter">Laptop Adapter</a></li>
-                        <li><a href="#battery">Laptop Battery</a></li>
-                        <li><a href="#keyboard">Laptop Keyboard</a></li>
-                    </ul>
-                </li>
-                
-                <!-- Refurbished Laptops with Subcategories -->
-                <li>
-                    <a href="#refurbished">Refurbished Laptops</a>
-                    <ul class="subcategory">
-                        <li><a href="#acer">Acer</a></li>
-                        <li><a href="#asus">Asus</a></li>
-                        <li><a href="#dell">Dell</a></li>
-                        <li><a href="#hp">HP</a></li>
-                        <li><a href="#lenovo">Lenovo</a></li>
-                    </ul>
-                </li>
-                
-                <!-- Printers with Subcategories -->
-                <li>
-                    <a href="#printers">Printers</a>
-                    <ul class="subcategory">
-                        <li><a href="#single-function">Single-Function Printers</a></li>
-                        <li><a href="#aio">All-in-One (AIO) Printers</a></li>
-                        <li><a href="#label">Label Printers</a></li>
-                    </ul>
-                </li>
-                
-                <!-- Computers & Desktop with Nested Subcategories -->
-                <li>
-                    <a href="#desktop">Computers & Desktop</a>
-                    <ul class="subcategory">
-                        <li class="has-nested">
-                            <a href="#monitors">LED Monitor</a>
-                            <ul class="nested-subcategory">
-                                <li><a href="#16inch">16 inch monitor</a></li>
-                                <li><a href="#18inch">18 inch monitor</a></li>
-                                <li><a href="#20inch">20 inch monitor</a></li>
-                                <li><a href="#22inch">22 Inch Monitor</a></li>
-                                <li><a href="#24inch">24 Inch Monitor</a></li>
-                                <li><a href="#27inch">27 Inch Monitor</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-nested">
-                            <a href="#desktops">Desktop</a>
-                            <ul class="nested-subcategory">
-                                <li><a href="#entry">Entry-Level Desktops</a></li>
-                                <li><a href="#mid">Mid-Range Desktops</a></li>
-                                <li><a href="#high">High-End Desktops</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                
-                <!-- Accessories with Subcategories -->
-                <li>
-
-                    <a href="#accessories">Accessories</a>
-                    <ul class="subcategory">
-                        <li><a href="#keyboards">Keyboards</a></li>
-                        <li><a href="#mouse">Mouse</a></li>
-                        <li><a href="#speakers">Speakers</a></li>
-                        <li><a href="#headphones">Headphones & Headsets</a></li>
-                        <li><a href="#hdd">External Hard Drives (HDD, SSD)</a></li>
-                        <li><a href="#pen-drives">USB Pen Drives</a></li>
-                        <li><a href="#memory-cards">Memory Cards</a></li>
-                        <li><a href="#docking">Docking Stations</a></li>
-                        <li><a href="#cooling">Cooling Pads</a></li>
-                        <li><a href="#mousepad">Mouse Pad</a></li>
-                        <li><a href="#stands">Laptop Stands & Cooling Pads</a></li>
-                        <li><a href="#toner">Printer Toner</a></li>
-                    </ul>
-                </li>
-                
-                <!-- More with Subcategories -->
-                <li>
-                    <a href="#more">More</a>
-                    <ul class="subcategory">
-                        <li><a href="#cctv">CCTV</a></li>
-                        <li><a href="#gifts">Office Gifts</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Evolve with Evosyne: Powering Your Digital Universe</h1>
-                <a href="enquiry.html" class="cta-button">Explore Services</a>
-                   </div><!DOCTYPE html>
-                   <html lang="en">
-                   <head>
-                       <!-- Your existing head content remains the same -->
-                       <style>
-                           /* Add these new styles to your existing CSS */
-                           
-                           /* Modal Styles */
-                           .modal-overlay {
-                               position: fixed;
-                               top: 0;
-                               left: 0;
-                               right: 0;
-                               bottom: 0;
-                               background: rgba(0,0,0,0.7);
-                               z-index: 2000;
-                               display: none;
-                               align-items: center;
-                               justify-content: center;
-                           }
-                           
-                           .modal-content {
-                               background: white;
-                               padding: 2rem;
-                               border-radius: 10px;
-                               max-width: 600px;
-                               width: 90%;
-                               max-height: 90vh;
-                               overflow-y: auto;
-                               position: relative;
-                               animation: modalFadeIn 0.3s ease-out;
-                           }
-                           
-                           @keyframes modalFadeIn {
-                               from { opacity: 0; transform: translateY(-20px); }
-                               to { opacity: 1; transform: translateY(0); }
-                           }
-                           
-                           .modal-close {
-                               position: absolute;
-                               top: 15px;
-                               right: 15px;
-                               font-size: 1.5rem;
-                               background: none;
-                               border: none;
-                               cursor: pointer;
-                               color: #2A2D72;
-                           }
-                           
-                           /* Enquiry Form Styles */
-                           .enquiry-form h2 {
-                               color: #2A2D72;
-                               margin-bottom: 1.5rem;
-                               text-align: center;
-                           }
-                           
-                           .form-group {
-                               margin-bottom: 1.5rem;
-                           }
-                           
-                           .form-group label {
-                               display: block;
-                               margin-bottom: 0.5rem;
-                               color: #2A2D72;
-                               font-weight: 500;
-                           }
-                           
-                           .form-control {
-                               width: 100%;
-                               padding: 12px 15px;
-                               border: 1px solid #E9ECEF;
-                               border-radius: 5px;
-                               font-size: 1rem;
-                               transition: border-color 0.3s;
-                           }
-                           
-                           .form-control:focus {
-                               border-color: #00C1D4;
-                               outline: none;
-                               box-shadow: 0 0 0 3px rgba(0, 193, 212, 0.2);
-                           }
-                           
-                           select.form-control {
-                               appearance: none;
-                               background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-                               background-repeat: no-repeat;
-                               background-position: right 10px center;
-                               background-size: 1em;
-                           }
-                           
-                           textarea.form-control {
-                               min-height: 120px;
-                               resize: vertical;
-                           }
-                           
-                           .privacy-terms {
-                               font-size: 0.9rem;
-                               margin: 1.5rem 0;
-                               display: flex;
-                               align-items: center;
-                           }
-                           
-                           .privacy-terms input {
-                               margin-right: 10px;
-                           }
-                           
-                           .privacy-terms a {
-                               color: #00C1D4;
-                               text-decoration: none;
-                               margin: 0 5px;
-                           }
-                           
-                           .privacy-terms a:hover {
-                               text-decoration: underline;
-                           }
-                           
-                           .submit-btn {
-                               background: #FF6B35;
-                               color: white;
-                               border: none;
-                               padding: 12px 30px;
-                               border-radius: 5px;
-                               font-size: 1rem;
-                               font-weight: 500;
-                               cursor: pointer;
-                               transition: background 0.3s;
-                               width: 100%;
-                           }
-                           
-                           .submit-btn:hover {
-                               background: #E05A2B;
-                           }
-                           
-                           /* Responsive Adjustments */
-                           @media (max-width: 768px) {
-                               .modal-content {
-                                   padding: 1.5rem;
-                               }
-                               
-                               .privacy-terms {
-                                   flex-direction: column;
-                                   align-items: flex-start;
-                               }
-                           }
-                       </style>
-                   </head>
-                   <body>
-                       <!-- Your existing body content remains the same until the footer -->
-                       
-                       <!-- Add this modal HTML before the closing </body> tag -->
-                       <div class="modal-overlay" id="enquiryModal">
-                           <div class="modal-content">
-                               <button class="modal-close">&times;</button>
-                               <form class="enquiry-form" id="contactForm">
-                                   <h2>Get in Touch</h2>
-                                   
-                                   <div class="form-group">
-                                       <label for="name">Enter your name</label>
-                                       <input type="text" id="name" name="name" class="form-control" required>
-                                   </div>
-                                   
-                                   <div class="form-group">
-                                       <label for="email">Enter Email ID</label>
-                                       <input type="email" id="email" name="email" class="form-control" required>
-                                   </div>
-                                   
-                                   <div class="form-group">
-                                       <label for="mobile">Enter mobile</label>
-                                       <input type="tel" id="mobile" name="mobile" class="form-control" required>
-                                   </div>
-                                   
-                                   <div class="form-group">
-                                       <label for="service">Select Services</label>
-                                       <select id="service" name="service" class="form-control" required>
-                                           <option value="">-- Select a Service --</option>
-                                           <option value="laptops">Rental Services</option>
-                                           <option value="parts">Laptop Spare Parts</option>
-                                           <option value="refurbished">Refurbished Laptops</option>
-                                           <option value="printers">Printers</option>
-                                           <option value="desktops">Computers & Desktop</option>
-                                           <option value="accessories">Accessories</option>
-                                           <option value="other">Other</option>
-                                       </select>
-                                   </div>
-                                   
-                                   <div class="form-group">
-                                       <label for="location">Select Location</label>
-                                       <select id="location" name="location" class="form-control" required>
-                                           <option value="">-- Select Location --</option>
-                                           <option value="mumbai">Mumbai</option>
-                                           <option value="delhi">Delhi</option>
-                                           <option value="bangalore">Bangalore</option>
-                                           <option value="hyderabad">Hyderabad</option>
-                                           <option value="chennai">Chennai</option>
-                                           <option value="pune">Pune</option>
-                                           <option value="other">Other</option>
-                                       </select>
-                                   </div>
-                                   
-                                   <div class="form-group">
-                                       <label for="message">Message</label>
-                                       <textarea id="message" name="message" class="form-control"></textarea>
-                                   </div>
-                                   
-                                   <div class="privacy-terms">
-                                       <input type="checkbox" id="privacy" name="privacy" required>
-                                       <label for="privacy">I agree to the <a href="#privacy">Privacy Policy</a> and <a href="#terms">Terms of Service</a></label>
-                                   </div>
-                                   
-                                   <button type="submit" class="submit-btn">SUBMIT</button>
-                               </form>
-                           </div>
-                       </div>
-                   
-                       <!-- Add this script right before the closing </body> tag -->
-                       <script>
-                           // Open modal when "Explore Solutions" is clicked
-                           document.querySelector('.cta-button').addEventListener('click', function(e) {
-                               e.preventDefault();
-                               document.getElementById('enquiryModal').style.display = 'flex';
-                               document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
-                           });
-                           
-                           // Close modal
-                           document.querySelector('.modal-close').addEventListener('click', function() {
-                               document.getElementById('enquiryModal').style.display = 'none';
-                               document.body.style.overflow = 'auto'; // Re-enable scrolling
-                           });
-                           
-                           // Close when clicking outside
-                           document.getElementById('enquiryModal').addEventListener('click', function(e) {
-                               if(e.target === this) {
-                                   this.style.display = 'none';
-                                   document.body.style.overflow = 'auto'; // Re-enable scrolling
-                               }
-                           });
-                           
-                           // Form submission handling
-                           document.getElementById('contactForm').addEventListener('submit', function(e) {
-                               e.preventDefault();
-                               
-                               // Validate privacy checkbox
-                               if(!document.getElementById('privacy').checked) {
-                                   alert('Please agree to the Privacy Policy and Terms of Service');
-                                   return false;
-                               }
-                               
-                               // Here you would normally send the form data to your server
-                               // For demonstration, we'll just show an alert
-
-                               
-                               alert('Thank you for your enquiry! We will contact you soon.');
-                               
-                               // Reset form and close modal
-                               this.reset();
-                               document.getElementById('enquiryModal').style.display = 'none';
-                               document.body.style.overflow = 'auto';
-                           });
-                       </script>
-                   </body>
-                   </html>
-            <div class="hero-image">
-                <img src="https://i.ibb.co/0RnBGQCw/image2.png" alt="Technology Illustration">
-            </div>
-        </section>
-
-        <!-- Partners Section -->
-        <section class="partners-section">
-            <div class="container">
-                <h2>Trusted By Industry Leaders</h2>
-                <div class="partners-grid">
-                    <img src="https://i.ibb.co/ds9JGwF9/amazon.jpg" alt="Amazon Partner">
-                    <img src="https://i.ibb.co/WWdYg6KF/Screenshot-278.png" alt="Tech Partner">
-                </div>
-            </div>
-        </section>
-
-        <!-- Features Section -->
-        <section class="features-section">
-            <div class="container features-grid">
-                <div class="feature-card">
-                    <i class="fas fa-shipping-fast"></i>
-                    <h3>Efficient Delivery</h3>
-                    <p>Swift implementation with 7-10 day deployment cycle</p>
-                    <div class="feature-highlight">
-                        <span>Rapid deployment for enterprise solutions</span>
-                    </div>
-                </div>
-
-                <div class="feature-card">
-                    <i class="fas fa-headset"></i>
-                    <h3>24/7 Expert Support</h3>
-                    <p>Round-the-clock technical assistance from certified engineers</p>
-                    <div class="feature-highlight">
-                        <span>99.9% Uptime Guarantee</span>
-                    </div>
-                </div>
-
-                <div class="feature-card">
-                    <i class="fas fa-shield-alt"></i>
-                    <h3>Secure Infrastructure</h3>
-                    <p>Enterprise-grade security protocols and compliance</p>
-                    <div class="feature-highlight">
-                        <span>ISO 27001 Certified</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Newsletter Section -->
-        <section class="newsletter-section">
-            <div class="container">
-                <div class="newsletter-content">
-                    <h2>Stay Ahead with Technology Insights</h2>
-                    <p>Subscribe to receive enterprise tech updates and strategic resources</p>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Enter corporate email" required>
-                        <button type="submit">Get Updates <i class="fas fa-arrow-right"></i></button>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer Section -->
-        <footer class="main-footer">
-            <div class="container footer-grid">
-                <div class="footer-brand">
-                    <img src="https://i.ibb.co/cSHjcf3K/blue-box-logo.jpg" alt="Evosyne Logo" class="footer-logo">
-                    <p class="contact-email">info@evosyne.com</p>
-                    <p class="footer-address">
-                        Office No. F-7, Mahalaxmi Bldg,<br>
-                        P.B. Marg, Worli, Opp. Paragon Center, Mumbai 400030<br>
-                    </p>
-                </div>
-
-                <div class="footer-column">
-                    <h4>Enterprise Solutions</h4>
-                    <ul>
-                        <li><a href="#ai">AI Integration</a></li>
-                        <li><a href="#cloud">Cloud Solutions</a></li>
-                        <li><a href="#iot">IoT Infrastructure</a></li>
-                        <li><a href="#cyber">Cyber Security</a></li>
-                        <li><a href="#analytics">Data Analytics</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-column">
-                    <h4>Support</h4>
-                    <ul>
-                        <li><a href="#docs">Technical Documentation</a></li>
-                        <li><a href="#support">24/7 Support Portal</a></li>
-                        <li><a href="#compliance">Compliance Center</a></li>
-                        <li><a href="#sla">Service Level Agreements</a></li>
-                        <li><a href="#training">Developer Training</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-column">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="#leadership">Executive Team</a></li>
-                        <li><a href="#cases">Enterprise Cases</a></li>
-                        <li><a href="#careers">Technical Careers</a></li>
-                        <li><a href="#partners">Strategic Partners</a></li>
-                        <li><a href="#compliance">Regulatory Compliance</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>© 2025 Evosyne. All Rights Reserved.</p>
-            </div>
-        </footer>
-    </body>
-    </html>
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>EVOSYNE - Technology Marketplace</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-        <style>
-            /* Reset and Base Styles */
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                font-family: 'Poppins', sans-serif;
-            }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Evosyne Tax & Accounting Services | Bookkeeping & Accounting India</title>
+
+<meta name="description" content="Professional Tax, Accounting, Bookkeeping, GST and Outsourcing services by Evosyne Tax & Accounting Services in Mumbai. Save time and grow your business.">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#f8fafc;
+color:#1e293b;
+}
+
+/* HEADER */
+
+.header{
+background:white;
+padding:15px 5%;
+display:flex;
+align-items:center;
+justify-content:space-between;
+box-shadow:0 2px 10px rgba(0,0,0,0.08);
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.logo-section{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.logo-section img{
+height:55px;
+}
+
+.company-name{
+font-weight:600;
+font-size:20px;
+color:#2563eb;
+}
+
+/* CONTACT INFO */
+
+.header-contact{
+text-align:right;
+font-size:14px;
+}
+
+.header-contact strong{
+color:#2563eb;
+}
+
+/* HERO */
+
+.hero{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:80px 5%;
+background:linear-gradient(135deg,#2563eb,#1e40af);
+color:white;
+flex-wrap:wrap;
+}
+
+.hero-text{
+max-width:600px;
+}
+
+.hero h1{
+font-size:42px;
+margin-bottom:20px;
+}
+
+.hero p{
+font-size:18px;
+margin-bottom:30px;
+opacity:.95;
+}
+
+.hero-buttons{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.btn{
+padding:14px 28px;
+border-radius:6px;
+text-decoration:none;
+font-weight:500;
+transition:.3s;
+}
+
+.btn-primary{
+background:white;
+color:#2563eb;
+}
+
+.btn-primary:hover{
+background:#e2e8f0;
+}
+
+.btn-secondary{
+background:#f97316;
+color:white;
+}
+
+.btn-secondary:hover{
+background:#ea580c;
+}
+
+/* SERVICES */
+
+.services{
+padding:70px 5%;
+background:white;
+}
+
+.section-title{
+text-align:center;
+font-size:32px;
+margin-bottom:40px;
+color:#1e293b;
+}
+
+.services-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+
+.service-card{
+background:#f8fafc;
+padding:30px;
+border-radius:10px;
+text-align:center;
+transition:.3s;
+}
+
+.service-card:hover{
+transform:translateY(-6px);
+box-shadow:0 8px 20px rgba(0,0,0,0.1);
+}
+
+.service-card i{
+font-size:40px;
+color:#2563eb;
+margin-bottom:15px;
+}
+
+.service-card h3{
+margin-bottom:10px;
+}
+
+/* CTA */
+
+.cta{
+background:#2563eb;
+color:white;
+padding:60px 5%;
+text-align:center;
+}
+
+.cta h2{
+font-size:28px;
+margin-bottom:15px;
+}
+
+/* FOOTER */
+
+.footer{
+background:#0f172a;
+color:white;
+padding:50px 5%;
+}
+
+.footer-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+}
+
+.footer h3{
+margin-bottom:15px;
+}
+
+.footer p{
+opacity:.8;
+line-height:1.6;
+}
+
+.footer-bottom{
+text-align:center;
+margin-top:30px;
+opacity:.6;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:28px;
+}
+
+.header{
+flex-direction:column;
+gap:10px;
+text-align:center;
+}
+
+.header-contact{
+text-align:center;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header class="header">
+
+<div class="logo-section">
+
+<img src="https://i.ibb.co/cSHjcf3K/blue-box-logo.jpg">
+
+<div class="company-name">
+Evosyne Tax & Accounting Services
+</div>
+
+</div>
+
+<div class="header-contact">
+
+<div><strong>Call:</strong> +91 9064352135 / 7738410521</div>
+
+<div><strong>Email:</strong> info@evosyne.com</div>
+
+</div>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-text">
+
+<h1>Affordable Accounting, Tax & Bookkeeping Services</h1>
+
+<p>
+Expert accounting solutions for businesses, startups, and CA firms.  
+Save time, reduce costs, and focus on growing your business.
+</p>
+
+<div class="hero-buttons">
+
+<a href="#" class="btn btn-primary" onclick="openModal()">Get Free Consultation</a>
+
+<a href="#" class="btn btn-secondary" onclick="openModal()">Contact Us</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- SERVICES -->
+
+<section class="services">
+
+<h2 class="section-title">Our Services</h2>
+
+<div class="services-grid">
+
+<div class="service-card">
+<i class="fas fa-calculator"></i>
+<h3>Bookkeeping</h3>
+<p>Accurate bookkeeping using QuickBooks, Tally, and Xero.</p>
+</div>
+
+<div class="service-card">
+<i class="fas fa-file-invoice-dollar"></i>
+<h3>GST Filing</h3>
+<p>Complete GST return filing and compliance services.</p>
+</div>
+
+<div class="service-card">
+<i class="fas fa-money-check"></i>
+<h3>Tax Preparation</h3>
+<p>Income tax filing and tax planning for businesses.</p>
+</div>
+
+<div class="service-card">
+<i class="fas fa-chart-line"></i>
+<h3>Financial Reporting</h3>
+<p>Profit & Loss, Balance Sheet and MIS reporting.</p>
+</div>
+
+<div class="service-card">
+<i class="fas fa-users"></i>
+<h3>Payroll Services</h3>
+<p>Complete payroll processing and compliance.</p>
+</div>
+
+<div class="service-card">
+<i class="fas fa-briefcase"></i>
+<h3>Outsourcing Services</h3>
+<p>Accounting outsourcing for CA firms and companies.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CTA -->
+
+<section class="cta">
+
+<h2>Ready to Outsource Your Accounting?</h2>
+
+<p>Contact Evosyne today and get expert accounting support.</p>
+
+<br>
+
+<a href="#" class="btn btn-secondary" onclick="openModal()">Request Free Quote</a>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+<div class="footer-grid">
+
+<div>
+
+<h3>Evosyne Tax & Accounting Services</h3>
+
+<p>
+
+F-7, Ground Floor, F Wing Mahalaxmi SRA CHS Building  
+P. B. Marg, Worli, Mumbai – 400030  
+
+</p>
+
+</div>
+
+<div>
+
+<h3>Contact</h3>
+
+<p>
+
+Phone: +91 9064352135<br>
+Phone: +91 7738410521<br>
+Email: info@evosyne.com
+
+</p>
+
+</div>
+
+<div>
+
+<h3>Services</h3>
+
+<p>
+
+Bookkeeping<br>
+GST Filing<br>
+Tax Preparation<br>
+Accounting Outsourcing
+
+</p>
+
+</div>
+
+</div>
+
+<div class="footer-bottom">
+
+© 2026 Evosyne Tax & Accounting Services. All Rights Reserved.
+
+</div>
+
+</footer>
+
+
+<!-- MODAL -->
+
+<div id="modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);justify-content:center;align-items:center;">
+
+<div style="background:white;padding:30px;border-radius:8px;width:90%;max-width:400px;">
+
+<h3>Contact Us</h3>
+
+<br>
+
+<input type="text" placeholder="Your Name" style="width:100%;padding:10px;margin-bottom:10px;">
+
+<input type="email" placeholder="Email" style="width:100%;padding:10px;margin-bottom:10px;">
+
+<input type="tel" placeholder="Phone" style="width:100%;padding:10px;margin-bottom:10px;">
+
+<button style="background:#2563eb;color:white;padding:12px;width:100%;border:none;border-radius:5px;">Submit</button>
+
+<br><br>
+
+<button onclick="closeModal()" style="width:100%;">Close</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+function openModal(){
+document.getElementById('modal').style.display='flex';
+}
+
+function closeModal(){
+document.getElementById('modal').style.display='none';
+}
+
+</script>
+
+</body>
+</html>
+
+              
     
-            /* Updated Header Styles */
-            .header {
-                padding: 1rem 5%;
-                background: #ffffff;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                display: flex;
-                align-items: center;
-                gap: 2rem;
-            }
-    
-            .logo-container {
-                flex: 0 0 180px;
-            }
-    
-            .logo {
-                width: 100%;
-            }
-    
-            .search-container {
-                flex: 1;
-                max-width: 600px;
-                display: flex;
-                align-items: stretch;
-            }
-    
-            .category-select {
-                padding: 0 15px;
-                border: 1px solid #E9ECEF;
-                border-right: none;
-                border-radius: 4px 0 0 4px;
-                background: #F8F9FA;
-                color: #2A2D72;
-                font-size: 0.9rem;
-                cursor: pointer;
-                appearance: none;
-                background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-                background-repeat: no-repeat;
-                background-position: right 10px center;
-                background-size: 1em;
-            }
-    
-            .search-input {
-                width: 100%;
-                padding: 0.8rem;
-                border: 1px solid #E9ECEF;
-                border-left: none;
-                border-right: none;
-                border-radius: 0;
-                font-size: 0.9rem;
-            }
-    
-            .search-button {
-                background: #2A2D72;
-                color: white;
-                border: none;
-                padding: 0 1.5rem;
-                border-radius: 0 4px 4px 0;
-                cursor: pointer;
-                transition: background 0.3s ease;
-            }
-    
-            .search-button:hover {
-                background: #1F235A;
-            }
-    
-            .header-icons {
-                display: flex;
-                gap: 1.5rem;
-                align-items: center;
-            }
-    
-            .header-icon {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                text-decoration: none;
-                color: #2A2D72;
-                font-size: 0.9rem;
-            }
-    
-            .header-icon i {
-                font-size: 1.2rem;
-                margin-bottom: 0.3rem;
-            }
-    
-            /* Updated Category Navigation Styles */
-            .category-nav {
-                background-color: #2A2D72;
-                padding: 15px;
-                margin: 20px 0;
-            }
-            
-            .category-links {
-                list-style-type: none;
-                padding: 0;
-                margin: 0;
-                display: flex;
-                flex-wrap: wrap;
-                gap: 15px;
-                justify-content: center;
-            }
-            
-            .category-links > li {
-                margin: 0;
-                position: relative;
-            }
-            
-            .category-links > li > a {
-                display: inline-block;
-                padding: 10px 15px;
-                background-color: #00C1D4;
-                color: #FFFFFF;
-                text-decoration: none;
-                border-radius: 5px;
-                font-weight: 700;
-                transition: all 0.3s ease;
-                text-align: center;
-                min-width: 150px;
-            }
-            
-            .category-links > li > a:hover {
-                background-color: #FF6B35;
-                transform: translateY(-2px);
-            }
-    
-            /* Subcategory Styles */
-            .subcategory {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 200px;
-                background: #F8F9FA;
-                border-radius: 0 0 8px 8px;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                z-index: 100;
-                padding: 10px 0;
-            }
-    
-            .subcategory li {
-                padding: 5px 15px;
-            }
-    
-            .subcategory a {
-                color: #2A2D72;
-                text-decoration: none;
-                font-weight: 500;
-                display: block;
-                padding: 5px 0;
-                transition: color 0.3s;
-            }
-    
-            .subcategory a:hover {
-                color: #00C1D4;
-            }
-    
-            /* Nested Subcategory Styles */
-            .nested-subcategory {
-                display: none;
-                position: absolute;
-                left: 100%;
-                top: 0;
-                width: 200px;
-                background: #fff;
-                border-radius: 0 8px 8px 8px;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                padding: 10px 0;
-            }
-    
-            .has-nested:hover .nested-subcategory {
-                display: block;
-            }
-    
-            .category-links > li:hover > .subcategory {
-                display: block;
-            }
-    
-            /* Hero Section Styles */
-            .hero {
-                padding: 4rem 5%;
-                background: #F8F9FA;
-                display: flex;
-                align-items: center;
-                gap: 3rem;
-            }
-    
-            .hero-content {
-                flex: 1;
-            }
-    
-            .hero-image {
-                flex: 1;
-                text-align: center;
-            }
-    
-            .hero-image img {
-                max-width: 500px;
-                width: 100%;
-            }
-    
-            .hero h1 {
-                font-size: 2.8rem;
-                color: #2A2D72;
-                margin-bottom: 1.5rem;
-            }
-    
-            .hero p {
-                color: #64748b;
-                line-height: 1.6;
-                margin-bottom: 2rem;
-            }
-    
-            .cta-button {
-                background: #FF6B35;
-                color: white;
-                padding: 1rem 2rem;
-                border-radius: 5px;
-                text-decoration: none;
-                display: inline-block;
-                transition: background 0.3s ease;
-            }
-    
-            .cta-button:hover {
-                background: #E05A2B;
-            }
-    
-            /* Responsive Design */
-            @media (max-width: 768px) {
-                .header {
-                    flex-wrap: wrap;
-                    gap: 1rem;
-                }
-                .search-container {
-                    order: 3;
-                    width: 100%;
-                }
-                .category-select {
-                    padding: 0 10px;
-                    font-size: 0.8rem;
-                    max-width: 120px;
-                }
-                .category-links {
-                    flex-direction: column;
-                    align-items: center;
-                }
-                .category-links > li {
-                    width: 100%;
-                }
-                .category-links > li > a {
-                    width: 100%;
-                }
-                .subcategory, .nested-subcategory {
-                    position: static;
-                    width: 100%;
-                    box-shadow: none;
-                }
-                .hero {
-                    flex-direction: column;
-                    text-align: center;
-                }
-                .hero h1 {
-                    font-size: 2rem;
-                }
-            }
-    
-            /* Partners Section Styles */
-            .partners-section {
-                padding: 4rem 5%;
-                background: #fff;
-                text-align: center;
-            }
-    
-            .partners-section h2 {
-                font-size: 2rem;
-                color: #2A2D72;
-                margin-bottom: 2rem;
-            }
-    
-            .partners-grid {
-                display: flex;
-                justify-content: center;
-                gap: 4rem;
-                flex-wrap: wrap;
-            }
-    
-            .partners-grid img {
-                max-width: 180px;
-                height: auto;
-                filter: grayscale(100%);
-                transition: filter 0.3s ease;
-            }
-    
-            .partners-grid img:hover {
-                filter: grayscale(0);
-            }
-    
-            /* Features Section Styles */
-            .features-section {
-                padding: 4rem 5%;
-                background: #F8F9FA;
-            }
-    
-            .features-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 2rem;
-            }
-    
-            .feature-card {
-                background: #fff;
-                padding: 2rem;
-                border-radius: 10px;
-                text-align: center;
-                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                transition: transform 0.3s ease;
-            }
-    
-            .feature-card:hover {
-                transform: translateY(-5px);
-            }
-    
-            .feature-card i {
-                font-size: 2.5rem;
-                color: #00C1D4;
-                margin-bottom: 1.5rem;
-            }
-    
-            .feature-card h3 {
-                color: #2A2D72;
-                margin-bottom: 1rem;
-            }
-    
-            .feature-card p {
-                color: #64748b;
-                line-height: 1.6;
-                margin-bottom: 1.5rem;
-            }
-    
-            .feature-highlight {
-                background: rgba(0, 193, 212, 0.1);
-                color: #00C1D4;
-                padding: 0.5rem 1rem;
-                border-radius: 20px;
-                display: inline-block;
-                font-weight: 500;
-            }
-    
-            /* Newsletter Styles */
-            .newsletter-section {
-                padding: 4rem 5%;
-                background: #2A2D72;
-                color: white;
-                text-align: center;
-            }
-    
-            .newsletter-content h2 {
-                font-size: 2rem;
-                margin-bottom: 1rem;
-            }
-    
-            .newsletter-content p {
-                margin-bottom: 2rem;
-                opacity: 0.9;
-            }
-    
-            .newsletter-form {
-                max-width: 600px;
-                margin: 0 auto;
-                display: flex;
-                gap: 1rem;
-            }
-    
-            .newsletter-form input {
-                flex: 1;
-                padding: 1rem;
-                border: none;
-                border-radius: 5px;
-                font-size: 1rem;
-            }
-    
-            .newsletter-form button {
-                background: #FF6B35;
-                color: white;
-                padding: 1rem 2rem;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background 0.3s ease;
-            }
-    
-            .newsletter-form button:hover {
-                background: #E05A2B;
-            }
-    
-            /* Footer Styles */
-            .main-footer {
-                background: #2A2D72;
-                color: white;
-                padding: 4rem 5% 2rem;
-            }
-    
-            .footer-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 3rem;
-                margin-bottom: 3rem;
-            }
-    
-            .footer-logo {
-                width: 180px;
-                margin-bottom: 1.5rem;
-            }
-    
-            .contact-email {
-                color: #00C1D4;
-                margin-bottom: 2rem;
-            }
-    
-            .footer-column h4 {
-                color: #00C1D4;
-                margin-bottom: 1.5rem;
-                font-weight: 600;
-            }
-    
-            .footer-column ul {
-                list-style: none;
-            }
-    
-            .footer-column li {
-                margin-bottom: 0.8rem;
-            }
-    
-            .footer-column a {
-                color: #F8F9FA;
-                text-decoration: none;
-                transition: color 0.3s ease;
-            }
-    
-            .footer-column a:hover {
-                color: #FF6B35;
-            }
-    
-            .footer-bottom {
-                text-align: center;
-                padding-top: 2rem;
-                border-top: 1px solid #374151;
-                margin-top: 2rem;
-                color: #E9ECEF;
-            }
-        </style>
-    </head>
-    <body>
-        <!-- Header and other HTML content remains the same -->
-        <!-- ... (rest of the HTML body remains unchanged) ... -->
-    </body>
-    </html>
-    
+
